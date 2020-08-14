@@ -73,6 +73,8 @@ class VrepProcess:
         print(self.m_baseName)
         print(self.m_baseHandle)
 
+        return baseHandle
+
     def simGetJointHandle(self, jointName):
         """
         扩展simGetHandle
@@ -85,6 +87,8 @@ class VrepProcess:
         print("available joint handle added:")
         print(self.m_jointName)
         print(self.m_jointHandle)
+
+        return jointHandle
 
 
     def simStart(self):
