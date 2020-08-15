@@ -221,3 +221,6 @@ class PID(object):
         self._last_time = _current_time()
         self._last_output = None
         self._last_input = None
+        
+    def setTargetPoint(self, targetpoint):
+        self.setpoint = targetpoint

@@ -1,0 +1,42 @@
+addpath('C:\Program Files\FunctionBay, Inc\RecurDyn V9R1\Toolkits\Controls\Simulink30');
+%addpath('C:\Program Files\FunctionBay, Inc\RecurDyn V9R1\Toolkits\Controls\Matlab');
+RecurDyn='C:\Program Files\FunctionBay, Inc\RecurDyn V9R1\Bin\';
+RecurDyn_CoSim='C:\Program Files\FunctionBay, Inc\RecurDyn V9R1\Toolkits\Controls\Simulink30\';
+RecurDyn_model='quadruped_demo1';
+r_temp___=size(RecurDyn_model);
+RecurDyn_model_n=r_temp___(2);
+Output_File='quadruped_demo1';
+r_temp___=size(Output_File);
+Output_file_n =r_temp___(2);
+if(exist([RecurDyn_model,'.rdyn']))
+  RecurDyn_inputs = 'LF_Tq1!LF_Tq2!LF_Tq3!RF_Tq1!RF_Tq2!RF_Tq3!LH_Tq1!LH_Tq2!LH_Tq3!RH_Tq1!RH_Tq2!RH_Tq3';
+  RecurDyn_outputs = 'Theta11!Theta12!Theta13!Theta21!Theta22!Theta23!Theta31!Theta32!Theta33!Theta41!Theta42!Theta43!PX!PY!PZ!Pitch!Roll!Yaw!TipForce1x!TipForce1y!TipForce1z!TipForce2x!TipForce2y!TipForce2z!TipForce3x!TipForce3y!TipForce3z!TipForce4x!TipForce4y!TipForce4z';
+  RecurDyn_io_ids = [  1  2  3  4  5  6  7  8  9  10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39  40  41  42 ];
+  RecurDyn_controltimestep = 1.e-003;
+  Plant_inputs = Rearrange_io( RecurDyn_inputs );
+  Plant_outputs = Rearrange_io( RecurDyn_outputs );
+  r_temp___=size(Plant_inputs);
+  Plant_inputs_num=r_temp___(1);
+  r_temp___=size(Plant_outputs);
+  Plant_outputs_num=r_temp___(1);
+  r_temp___=version;
+  Matlab_version=str2double(r_temp___(1));
+  disp('');
+  disp('===== RecurDyn & Matlab/SIMULINK ==========');
+  disp('%%% INFO : RecurDyn plant actuators names :');
+  disp([int2str([1:size(Plant_inputs,1)]'),blanks(size(Plant_inputs,1))',Plant_inputs]);
+  disp('%%% INFO : RecurDyn plant sensors names :');
+  disp([int2str([1:size(Plant_outputs,1)]'),blanks(size(Plant_outputs,1))',Plant_outputs]);
+  disp( '=============================================' ) ;
+% disp( '************************ Reserved Variables ************************* ' ) ;
+% disp( '* Plant_inputs,Plant_outputs,RecurDyn,RecurDyn_model,RecurDyn_static*' ) ;
+% disp( '* RecurDyn_inputs,RecurDyn_io_ids,RecurDyn_outputs                  *' ) ;
+% disp( '* RecurDyn_controltimestep,RecurDyn_show,RecurDyn_step              *');
+% disp( '************* Reserved variables can not be changed ***************** ' ) ;
+  disp( ' ' ) ;
+else
+  disp('');
+  disp('%%% ERROR : missing RecurDyn plant model file !!!');
+  disp('');
+end
+  clear r_temp___;

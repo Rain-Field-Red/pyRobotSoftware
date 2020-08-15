@@ -7,7 +7,7 @@ sys.path.append('../controller')
 from simulation_process import VrepProcess
 from simple_pid import PID
 
-from trackingPID import trackingPD
+#from trackingPID import trackingPD
 
 import matplotlib.pyplot as plt
 
@@ -47,22 +47,14 @@ def main():
     控制环
     """
     # 创建左腿控制器
-    # left_hip_joint_handle = mainProcess.m_jointHandle[0]
-    # left_knee_joint_handle = mainProcess.m_jointHandle[1]
-    # left_ankle_joint_handle = mainProcess.m_jointHandle[2]
     left_hip_angle, left_hip_angle_dot = mainProcess.simGetJointInfo(left_hip_joint_handle)
     left_knee_angle, left_knee_angle_dot = mainProcess.simGetJointInfo(left_knee_joint_handle)
     left_ankle_angle, left_ankle_angle_dot = mainProcess.simGetJointInfo(left_ankle_joint_handle)
-    # pid_left_hip = PID(1000,0,200,(left_hip_angle))                      #期望设置到当前
-    # pid_left_knee = PID(700,0,150,(left_knee_angle))
-    # pid_left_ankle = PID(200,0,50,(left_ankle_angle))
-    pid_left_hip = trackingPD(50,0,10,left_hip_angle,0)
-    pid_left_knee = trackingPD(50,0,10,left_knee_angle,0)
-    pid_left_ankle = trackingPD(0,0,0,left_ankle_angle,0)
+    pid_left_hip = PID(1000,0,200,(left_hip_angle))                      #期望设置到当前
+    pid_left_knee = PID(700,0,150,(left_knee_angle))
+    pid_left_ankle = PID(200,0,50,(left_ankle_angle))
+
     # 创建右腿控制器
-    # right_hip_joint_handle = mainProcess.m_jointHandle[3]
-    # right_knee_joint_handle = mainProcess.m_jointHandle[4]
-    # right_ankle_joint_handle = mainProcess.m_jointHandle[5]
     right_hip_angle, right_hip_angle_dot = mainProcess.simGetJointInfo(right_hip_joint_handle)
     right_knee_angle, right_knee_angle_dot = mainProcess.simGetJointInfo(right_knee_joint_handle)
     right_ankle_angle, right_ankle_angle_dot = mainProcess.simGetJointInfo(right_ankle_joint_handle)
@@ -104,12 +96,9 @@ def main():
         right_ankle_joint_history.append(right_ankle_angle)
 
         # 计算控制量
-        # u_left_hip = pid_left_hip(left_hip_angle)
-        # u_left_knee = pid_left_knee(left_knee_angle)
-        # u_left_ankle = pid_left_ankle(left_ankle_angle)
-        u_left_hip = pid_left_hip.calculate(left_hip_angle,left_hip_angle_dot)
-        u_left_knee = pid_left_knee.calculate(left_knee_angle, left_knee_angle_dot)
-        u_left_ankle = pid_left_ankle.calculate(left_ankle_angle, left_ankle_angle_dot)
+        u_left_hip = pid_left_hip(left_hip_angle)
+        u_left_knee = pid_left_knee(left_knee_angle)
+        u_left_ankle = pid_left_ankle(left_ankle_angle)
 
         u_right_hip = pid_right_hip(right_hip_angle)
         u_right_knee = pid_right_knee(right_knee_angle)

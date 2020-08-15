@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<AnalysisResultFiles rpmxver="1000" rdsolverver="9.1.6857.0" os="WINDOWS" filename="quadruped_demo1_02\quadruped_demo1">
+    <Command ID="1" type="Dynamic" StartTime="0" text="SIM/DYN, END=12.000000, STEP=100">
+        <!--File type="rplt" path=".\quadruped_demo1.rplt" datatype="New"-->
+        <File type="rad" path=".\quadruped_demo1.rad" datatype="New" />
+    </Command>
+    <Command ID="2" type="Stop" StartTime="12" text="STOP" />
+</AnalysisResultFiles>
