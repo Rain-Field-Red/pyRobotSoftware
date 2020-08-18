@@ -14,7 +14,7 @@ class kinematics:
         theta1 = q[0]
         theta2 = q[1]
 
-        x_ankle = l1*sin(theta1) + l2*sin(theta1+theta2)
+        x_ankle = -l1*sin(theta1) - l2*sin(theta1+theta2)
         z_ankle = -l1*cos(theta1) - l2*cos(theta1+theta2)
 
         return x_ankle, z_ankle
@@ -27,7 +27,7 @@ class kinematics:
         theta2 = q[1]
         theta3 = q[2]
 
-        x_ankle = l1*sin(theta1) + l2*sin(theta1+theta2)
+        x_ankle = l1*sin(theta1) - l2*sin(theta1+theta2)
         z_ankle = -l1*cos(theta1) - l2*cos(theta1+theta2)
         theta = pi/2 - (theta1+theta2+theta3)
 
@@ -42,9 +42,9 @@ class kinematics:
 
         m = pow(x_ankle,2) + pow(z_ankle,2) - pow(l1,2) - pow(l2,2)
         n = 2*l1*l2
-        theta2 = -acos(m/n)
+        theta2 = acos(m/n)
         
-        m = l1*x_ankle + l2*x_ankle*cos(theta2) + l2*z_ankle*sin(theta2)
+        m = -l1*x_ankle - l2*x_ankle*cos(theta2) + l2*z_ankle*sin(theta2)
         n = pow(x_ankle,2) + pow(z_ankle,2)
         theta1 = asin(m/n)
 
@@ -60,9 +60,9 @@ class kinematics:
 
         m = pow(x_ankle,2) + pow(z_ankle,2) - pow(l1,2) - pow(l2,2)
         n = 2*l1*l2
-        theta2 = -acos(m/n)
+        theta2 = acos(m/n)
         
-        m = l1*x_ankle + l2*x_ankle*cos(theta2) + l2*z_ankle*sin(theta2)
+        m = -l1*x_ankle - l2*x_ankle*cos(theta2) + l2*z_ankle*sin(theta2)
         n = pow(x_ankle,2) + pow(z_ankle,2)
         theta1 = asin(m/n)
 

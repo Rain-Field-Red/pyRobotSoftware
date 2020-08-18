@@ -145,7 +145,7 @@ class GaitScheduler:
         self.calcAuxiliaryGaitData()
 
     def modifyGait(self):
-        print('do nothing')
+        print('modify nothing')
     
     def step(self):
 
@@ -195,7 +195,7 @@ class GaitScheduler:
                             (self.gaitData.switchingPhase[foot] - self.gaitData.phaseVariable[foot])
 
                     # 接触时摆动剩余时间为0
-                    self.gaitData.timeSwingRemaining = 0.0
+                    self.gaitData.timeSwingRemaining[foot] = 0.0
 
                     # 首次接触以为着落足
                     if 0 == self.gaitData.contactStatePrev[foot]:
@@ -219,7 +219,7 @@ class GaitScheduler:
                     self.gaitData.timeStanceRemaining[foot] = 0.0
                     
                     # 计算摆动剩余时间
-                    self.gaitData.timeSwingRemaining = \
+                    self.gaitData.timeSwingRemaining[foot] = \
                         self.gaitData.periodTime[foot] * (1 - self.gaitData.phaseVariable[foot])
 
                     # 首次不接触意味着抬腿
@@ -281,6 +281,16 @@ class GaitScheduler:
             print('---------------------------------------------------------')
             print('Enabled:', self.gaitData.gaitEnabled[0], 
                 '|', self.gaitData.gaitEnabled[1])
+            print('Period Time', self.gaitData.periodTime[0], 
+                '|', self.gaitData.periodTime[1])
+            print('Contact State:', self.gaitData.contactStateScheduled[0], 
+                '|', self.gaitData.contactStateScheduled[1])
+            print('Phase Variable:', self.gaitData.phaseVariable[0], 
+                '|', self.gaitData.phaseVariable[1])
+            print('Stance Time Remaining:', self.gaitData.timeStanceRemaining[0], 
+                '|', self.gaitData.timeStanceRemaining[1])
+            print('Swing Time Remaining:', self.gaitData.timeSwingRemaining[0], 
+                '|', self.gaitData.timeSwingRemaining[1])
             print('nextGait', self.gaitData._nextGait)
 
             self.printIter = 0
@@ -299,7 +309,7 @@ def main():
     sch.gaitData._nextGait = gaitType.STATIC_WALK
     sch.createGait()
     
-    for idx in range(200):
+    for idx in range(100):
         sch.step()
         sch.printGaitInfo()
 

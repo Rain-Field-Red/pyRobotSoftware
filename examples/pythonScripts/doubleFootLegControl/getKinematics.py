@@ -20,14 +20,14 @@ p_hip = [x_hip, z_hip]
 print('p_hip=', p_hip)
 
 # 膝关节位置
-x_knee = x_hip + l1*sin(theta1)
+x_knee = x_hip - l1*sin(theta1)
 z_knee = z_hip - l1*cos(theta1)
 
 p_knee = [x_knee, z_knee]
 print('p_knee=', p_knee)
 
 # 踝关节位置
-x_ankle = x_knee + l2*sin(theta1 + theta2)
+x_ankle = x_knee - l2*sin(theta1 + theta2)
 z_ankle = z_knee - l2*cos(theta1 + theta2)
 
 p_ankle = [x_ankle, z_ankle]
@@ -53,11 +53,11 @@ tt = th2[1].subs([(l1,0.4), (l2,0.4), (xd,0), (zd, -0.4*sqrt(2))])
 print('test second theta2 = ', tt)
 
 # 
-T = x_ankle*sin(theta1) - z_ankle*cos(theta1)
+T = x_ankle*sin(theta1) + z_ankle*cos(theta1)
 print('T=', T)
 TT =simplify(T)
 print('TT=', TT)
-D = x_ankle*cos(theta1) + z_ankle*sin(theta1)
+D = x_ankle*cos(theta1) - z_ankle*sin(theta1)
 print('D=', D)
 DD = simplify(D)
 print('DD=', DD)
@@ -65,7 +65,7 @@ print('when theta2 is known, sin(theta1) and cos(theta1) can be calculated')
 
 # 已知期望位置求髋关节角度
 s1, c1 = symbols('s1 c1')
-res = linsolve([xd*s1 - zd*c1 - TT, xd*c1 + zd*s1 - DD], (s1, c1))
+res = linsolve([xd*s1 + zd*c1 - TT, xd*c1 - zd*s1 - DD], (s1, c1))
 res_list = list(res)
 print('sin(theta1) and cos(theta1) is', res_list)
 
@@ -78,7 +78,7 @@ ccc1 = cc1.subs([(l1,0.4), (l2,0.4), (xd,0), (zd, -0.4*sqrt(2))])
 print('test cos(theta1) = ', ccc1)
 
 # 从多解中选择
-print('select theta2 =', th2[0]-2*pi)
+print('select theta2 =', th2[1])
 print('select theta1 =', asin(ss1))
 
 # 踝关节角度
