@@ -84,23 +84,43 @@ expr.subs[(x,1),(y,2)]
 
 （5）当已知踝关节位置（xd，zd）和膝关节角度theta2后，可以计算出s1和c1
 
+（6）根据前面的结果，可知有两组解，选择第一个膝关节的解和asin(s1)作为髋关节的解。
 
-
-（6）根据前面的结果，可知有两组解，选择第二个膝关节的解和asin(s1)作为髋关节的解。
+（7）使用sympy的diff函数，计算足端位置对两个角度的偏微分，构造雅克比矩阵
 
 
 
 ## 7、运算结果
 
-选择膝关节角度小于0，髋关节角度接近0的一组解。
-
+（1）正运动学
 $$
-\theta_2 = -acos(\frac{xd^2+zd^2-l1^2-l2^2}{2*l1*l2} )
+x = -l1*sin(\theta_1) - l2*sin(\theta_1+\theta_2)
 \\
-\theta_1 = asin(\frac{l1*xd+l2*xd*cos(\theta_2)+l2*zd*sin(\theta_2)}{xd^2+zd^2})
-\\
+z = -l1*cos(\theta_1) - l2*cos(\theta_1+\theta_2)
 $$
 
 
+（2）逆运动学
+
+选择膝关节角度大于0，髋关节角度接近0的一组解。
+$$
+\theta_2 = acos(\frac{xd^2+zd^2-l1^2-l2^2}{2*l1*l2} )
+\\
+\theta_1 = asin(\frac{-l1*xd-l2*xd*cos(\theta_2)+l2*zd*sin(\theta_2)}{xd^2+zd^2})
+\\
+$$
 
 
+
+（3）雅克比矩阵
+$$
+J = \left[
+\begin{matrix}
+
+-l1*cos(\theta_1) - l2*cos(\theta_1 + \theta_2) & -l2*cos(\theta_1 + \theta_2)
+\\ l1*sin(\theta_1) + l2*sin(\theta_1 + \theta_2)
+& l2*sin(\theta_1 + \theta_2)
+
+\end{matrix}
+\right]
+$$

@@ -127,7 +127,7 @@ class GaitScheduler:
             self.gaitData.gaitEnabled = np.ones(2)
             self.gaitData.periodTimeNominal = 1.25
             self.gaitData.initialPhase = 0.0
-            self.gaitData.switchingPhaseNominal = 0.8
+            self.gaitData.switchingPhaseNominal = 0.6               # 针对双腿修改为0.6
             tmp = np.ones(2)
             tmp[0] = 0.0
             tmp[1] = 0.5
