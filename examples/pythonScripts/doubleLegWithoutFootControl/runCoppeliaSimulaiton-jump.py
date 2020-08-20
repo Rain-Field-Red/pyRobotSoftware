@@ -10,12 +10,13 @@ from kinematics import kinematics
 
 import matplotlib.pyplot as plt
 import numpy as np
+from math import fmod
 
 def main():
     mainProcess = VrepProcess()
 
     mainProcess.simConnect()
-    mainProcess.simSetup(0.001, 1000)
+    mainProcess.simSetup(0.001, 2000)
 
     baseName = 'Body'
     jointName = 'hip_joint'
@@ -41,8 +42,8 @@ def main():
     q1[0] = hip_angle
     q1[1] = knee_angle
     p_des = kk.forwardkinematics(q1)
-    pid_x = PID(1000, 0, 200, p_des[0])
-    pid_z = PID(2000, 0, 200, p_des[1])
+    pid_x = PID(2000, 0, 500, p_des[0])
+    pid_z = PID(2000, 0, 500, p_des[1])
 
     f_des = np.zeros(2)
     tao_des = np.zeros(2)
@@ -68,9 +69,16 @@ def main():
         # print(p)
         # print(J)
 
-        f_des[0] = pid_x(p_cur[0])
-        # f_des[1] = pid_z(p_cur[1]) - 150            # 重力补偿
-        f_des[1] = pid_z(p_cur[1])
+        if fmod(idx, 800) < 400:
+            f_des[0] = pid_x(p_cur[0])
+            # f_des[1] = pid_z(p_cur[1]) - 150            # 重力补偿
+            f_des[1] = pid_z(p_cur[1])
+        else:
+            f_des[0] = pid_x(p_cur[0])
+            if p_cur[1] > -0.6:
+                f_des[1] = - 400
+            else:
+                f_des[1] = pid_z(p_cur[1])
         # print(f_des)
 
         tao = np.dot(J.T, f_des)
@@ -95,7 +103,7 @@ def main():
 
         if idx%100 == 0:
             print('running')
-            print(tao)
+            print(f_des[1])
             # print(u_hip, u_knee)
         
         mainProcess.simNextStep()
